@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { useRouter } from 'next/router'
-import { Image, Box, Button, Heading, Divider, Flex, Text, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, UnorderedList, useDisclosure, useColorMode } from "@chakra-ui/react";
+import { Image, Box, Button, Heading, Divider, Flex, Text, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, UnorderedList, ListItem, useDisclosure, useColorMode } from "@chakra-ui/react";
 import { en, es } from "@/locales"
 
 export default function WorkExperience() {
