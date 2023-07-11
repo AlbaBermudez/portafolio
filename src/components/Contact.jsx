@@ -1,15 +1,22 @@
-import { Box, Heading, Divider, Flex, Text } from "@chakra-ui/react";
+import { useRouter } from 'next/router'
+import { Box, Heading, Divider, Flex, Text, useColorMode } from "@chakra-ui/react";
 import { Link } from "@chakra-ui/next-js";
 import { GrGithub } from "react-icons/gr";
 import { FaLinkedinIn } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
+import { en, es } from "@/locales"
 
 export default function Contact() {
+  const { colorMode } = useColorMode()
+  const { locale } = useRouter()
+  const t = locale === "en" ? en : es;
+  const { heading } = t
+
   return (
     <Box w="90%" maxW="1200px" m="0 auto">
       <Box m="60px auto 0">
         <Heading fontWeight="00" textAlign="center">
-          Contacto
+          {heading.contact}
         </Heading>
         <Divider
           bgColor="palette.pink"
@@ -35,7 +42,7 @@ export default function Contact() {
           href="https://github.com/AlbaBermudez"
           target="_blank"
         >
-          <GrGithub color="#4A5568" fontSize="50px" />
+          <GrGithub color={colorMode === "light" ? "#4A5568" : "CBD5E0"} fontSize="50px" />
           <Text fontSize="14px">GitHub</Text>
         </Link>
 
@@ -47,7 +54,7 @@ export default function Contact() {
           href="https://www.linkedin.com/in/alba-bermudez-05a691203/"
           target="_blank"
         >
-          <FaLinkedinIn color="#4A5568" fontSize="50px" />
+          <FaLinkedinIn color={colorMode === "light" ? "#4A5568" : "CBD5E0"} fontSize="50px" />
           <Text fontSize="14px">LinkedIn</Text>
         </Link>
 
@@ -60,7 +67,7 @@ export default function Contact() {
           href="mailto:albamarinab22@gmail.com"
           target="_blank"
         >
-          <MdEmail color="#4A5568" fontSize="50px" />
+          <MdEmail color={colorMode === "light" ? "#4A5568" : "CBD5E0"} fontSize="50px" />
           <Text fontSize="14px">Email</Text>
         </Link>
 
@@ -69,3 +76,4 @@ export default function Contact() {
     </Box>
   );
 }
+// #CBD5E0

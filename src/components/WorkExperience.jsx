@@ -1,7 +1,15 @@
-import { Image, Box, Button, Heading, Divider, Flex, Text, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, useDisclosure } from "@chakra-ui/react";
+import React, { useState } from "react"
+import { useRouter } from 'next/router'
+import { Image, Box, Button, Heading, Divider, Flex, Text, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, UnorderedList, useDisclosure, useColorMode } from "@chakra-ui/react";
+import { en, es } from "@/locales"
 
 export default function WorkExperience() {
     const { isOpen, onOpen, onClose } = useDisclosure()
+    const { colorMode } = useColorMode()
+    const { locale } = useRouter()
+    const t = locale === "en" ? en : es;
+    const { workExperience, heading } = t
+    const [card, setCard] = useState()
     const icons = [
         { id: 0, image: "/images/workExperience/bod.webp", alt: "BOD" },
         { id: 1, image: "/images/workExperience/iberoseguros.webp", alt: "IberoSeguros" },
@@ -12,14 +20,17 @@ export default function WorkExperience() {
         <Box w="90%" maxW="1200px" m="0 auto">
 
             <Box m="60px auto 0">
-                <Heading fontWeight="400" textAlign="center">Experiencia Laboral</Heading>
+                <Heading fontWeight="400" textAlign="center">{heading.workExperience}</Heading>
                 <Divider bgColor="palette.pink" w="150px" h="3px" opacity={0.9} borderRadius="10px" m="10px auto" />
             </Box>
 
             <Flex direction={{ base: "column", md: "row" }} justifyContent="center" alignItems="center" gap={{ base: "20px", md: "80px" }} mt="40px">
                 {icons.map(({ id, image, alt }) => {
                     return (
-                        <Box key={id} borderRadius="15px" boxShadow="rgba(0, 0, 0, 0.09) 2px 4px 20px 0px;" overflow="hidden" cursor="pointer" onClick={onOpen}>
+                        <Box key={id} borderRadius="15px" boxShadow={colorMode === "light" ? "rgba(0, 0, 0, 0.09) 2px 4px 20px 0px" : "rgba(0, 0, 0, 0.5) 2px 4px 20px 0px"} _hover={{ transform: "scale(1.05)" }} transition="0.3s" overflow="hidden" cursor="pointer" onClick={() => {
+                            onOpen();
+                            setCard(id);
+                        }}>
                             <Image src={image} alt={alt} w="250px" />
                             <Text textAlign="center" fontWeight="700" p="15px">{alt}</Text>
                         </Box>
@@ -27,23 +38,46 @@ export default function WorkExperience() {
                 })}
             </Flex>
 
-            <Modal isOpen={isOpen} onClose={onClose}>
-                <ModalOverlay />
-                <ModalContent>
-                    <ModalHeader>Modal Title</ModalHeader>
-                    <ModalCloseButton />
-                    <ModalBody>
-                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nihil provident numquam reiciendis expedita ad sapiente maxime! Pariatur iure deleniti enim numquam architecto ab, ratione mollitia inventore vel tempora quae. Vero, ullam, illum eius numquam corporis accusamus totam aspernatur inventore officia suscipit at? Repudiandae nisi possimus libero quisquam, nesciunt rem labore consequatur pariatur et iure maxime ad, ipsam provident deserunt consequuntur necessitatibus optio ea dolor voluptatem nam dolore accusamus earum ex doloribus! Nostrum officia in dolores magni earum nihil quae beatae sunt voluptatum sequi. Earum facilis illum quam quo veritatis consequatur nesciunt alias impedit quasi, esse laudantium natus, deleniti quisquam sequi!
-                    </ModalBody>
+            {workExperience.map(({ id, company, job, description, headingResponsibilities, lisItemResponsibilities, text01, text02 }) => {
+                return (
+                    <React.Fragment key={id}>
+                        {card === id &&
+                            <Modal isOpen={isOpen} onClose={onClose} size={{ base: "sm", md: "xl" }} scrollBehavior="inside" >
+                                <ModalOverlay />
+                                <ModalContent>
+                                    <ModalHeader fontSize="16px">{company}</ModalHeader>
+                                    <ModalCloseButton />
+                                    <ModalBody>
+                                        <Text fontWeight={700}>{job}</Text>
+                                        <Text mt="20px">{description}</Text>
+                                        <Text my="20px">{headingResponsibilities}</Text>
 
-                    <ModalFooter>
-                        <Button colorScheme='blue' mr={3} onClick={onClose}>
-                            Close
-                        </Button>
-                        <Button variant='ghost'>Secondary Action</Button>
-                    </ModalFooter>
-                </ModalContent>
-            </Modal>
+                                        <UnorderedList>
+                                            {lisItemResponsibilities.map(({ id, text }) => {
+                                                return (
+                                                    <React.Fragment key={id}>
+                                                        <ListItem>{text}</ListItem>
+                                                    </React.Fragment>
+                                                )
+                                            })}
+                                        </UnorderedList>
+
+                                        <Text my="20px">{text01}</Text>
+                                        <Text>{text02}</Text>
+                                    </ModalBody>
+
+                                    <ModalFooter>
+                                        <Button bgColor="palette.pink" color="white" mr={3} onClick={onClose}>
+                                            Close
+                                        </Button>
+                                    </ModalFooter>
+                                </ModalContent>
+                            </Modal>
+                        }
+                    </React.Fragment>
+                )
+            })}
+
         </Box>
     )
 }

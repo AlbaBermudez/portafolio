@@ -1,6 +1,12 @@
 import { Text, Box, Heading } from '@chakra-ui/react'
+import { useRouter } from 'next/router'
+import { en, es } from "@/locales"
 
 export default function About() {
+    const { locale } = useRouter()
+    const t = locale === "en" ? en : es;
+    const { about: { text } } = t
+
     return (
         <Box w="90%" maxW="1200px" m="0 auto">
             <Box m={{ base: "50px auto 0", md: "80px auto 0" }}>
@@ -9,8 +15,7 @@ export default function About() {
             </Box>
 
             <Box maxW="571px" m="15px auto 0">
-                <Text textAlign="center" fontSize={{ base: "15px", md: "16px" }} lineHeight={1.8}>Soy una ingeniera informática con un año de experiencia como Backend Developer, especializada en Python con Django y PostgreSQL. Mi pasión por la tecnología me ha llevado a seguir estudiando y perfeccionando mis habilidades en el desarrollo de software. Estoy emocionada por conectar con profesionales del sector y explorar nuevas oportunidades para aplicar mis conocimientos y habilidades en proyectos desafiantes.
-                </Text>
+                <Text textAlign="center" fontSize={{ base: "15px", md: "16px" }} lineHeight={1.8}>{text}</Text>
             </Box>
 
         </Box>

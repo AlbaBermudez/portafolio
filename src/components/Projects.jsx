@@ -1,6 +1,11 @@
+import { useRouter } from 'next/router'
 import { Image, Box, Heading, Divider, Grid, GridItem } from '@chakra-ui/react'
+import { en, es } from "@/locales"
 
 export default function Projects() {
+    const { locale } = useRouter()
+    const t = locale === "en" ? en : es;
+    const { heading } = t
 
     const images = [
         { id: 0, image: "/images/projects/01.avif" },
@@ -14,7 +19,7 @@ export default function Projects() {
     return (
         <Box w="90%" maxW="1200px" m="0 auto">
             <Box m="50px auto 0">
-                <Heading fontWeight="400" textAlign="center">Proyectos</Heading>
+                <Heading fontWeight="400" textAlign="center">{heading.projects}</Heading>
                 <Divider bgColor="palette.pink" w="150px" h="3px" opacity={0.9} borderRadius="10px" m="10px auto" />
             </Box>
 

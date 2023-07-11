@@ -1,16 +1,22 @@
+import { useRouter } from 'next/router'
 import { Box, Heading, Divider, Grid } from '@chakra-ui/react'
 import { FaPython, FaHtml5, FaLinux } from "react-icons/fa";
 import { GrMysql, GrDocker } from "react-icons/gr";
 import { BsGit } from "react-icons/bs";
-import { SiDjango, SiPostgresql, SiCss3 } from "react-icons/si";
+import { SiDjango, SiCss3 } from "react-icons/si";
 import { BiLogoPostgresql } from "react-icons/bi";
+import { en, es } from "@/locales"
 
 export default function Skills() {
+    const { locale } = useRouter()
+    const t = locale === "en" ? en : es;
+    const { heading } = t
+
     return (
         <Box w="90%" maxW="1200px" m="0 auto">
 
             <Box m="60px auto 0">
-                <Heading fontWeight="400" textAlign="center">Habilidades</Heading>
+                <Heading fontWeight="400" textAlign="center">{heading.skills}</Heading>
                 <Divider bgColor="palette.pink" w="150px" h="3px" opacity={0.9} borderRadius="10px" m="10px auto" />
             </Box>
 
